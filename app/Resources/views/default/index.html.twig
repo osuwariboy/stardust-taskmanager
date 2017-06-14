@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th style="width:5%">Id</th>
+                <th>Task</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.label }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <form method="post" action="{{ app.request.baseurl }}/add">
+                        <td colspan="2">
+                            <input type="textbox" name="label" class="small-6 small-center" placeholder="New task description..."> <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                        </td>
+                    </form>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
