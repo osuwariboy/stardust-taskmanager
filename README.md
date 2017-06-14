@@ -1,7 +1,6 @@
 StarDust Testing skill test
 ==========================
 
-
 ### Application
 The task manager allows anybody to simply manage tasks through a web interface.
 
@@ -9,65 +8,45 @@ The task manager allows anybody to simply manage tasks through a web interface.
 * php 5.6+
 * mysql
 * A github account
+* php composer
 
 ### Installation
-**/!\ You need to fork this repository. See [How to submit your work?](#how-to-submit-your-work)**
+**You must fork and clone your fork localy first.** Then do this procedure:
 ```sh
-php composer.phar install
-cp config/config.yml.dist config/config.yml
-mysql -u root <database> < resources/database.sql
-mysql -u root <database> < resources/fixtures.sql
-php -S localhost:1337 -t web/ web/index.php
+php composer install
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:create
 ```
-You can change the database connection from the file `config/config.yml`.
+(optional) You can import the fixtures.sql into your newly created database if you want to start with demo data.
+
+Then, launch a local test server from the repo with this command: 
+```sh
+php bin/console server:run
+```
+You are now ready to access the application at http://localhost:8000.
 
 ### Instructions
 
-You will be asked to improve the code of this app with the following tasks.
-
-You can complete the tasks in any order.
-
-Separate your commits by task with a meaningful description.
+You will be asked to improve the code of this app with the following tasks. You can complete the tasks in any order. Separate your commits by task and put the task number in your message.
 
 ### Tasks
-* TASK 1: As a user I can't add a todo without a description.
-* TASK 2: As a user I can mark a todo as completed.
-    - Write a database migration script in `resources/`
-* TASK 3: As a user I can view a todo in a JSON format.
-    - Ex: /todo/{id}/json => {id: 1, user_id: 1, description: "Lorem Ipsum"}
-* TASK 4: As a user I can see a confirmation message when I add/delete a todo.
-    - Hint: Use session FlashBag.
-* TASK 5: As a user I can see my list of todos paginated.
-* TASK 6: Implement an ORM database access layer so we don’t have SQL in the controller code.
+* #1: The user can't add a new task without a description.
+* #2: The user must be able to delete a task.
+* #3: The user must be able to mark a task as completed.
+* #4: A confirmation message must be shown when the user successfully add, complete or delete a task _(hint: flash messages)_.
+* #5: When the user clicks on a task, he must land on task page, with buttons to complete or delete the task.
+* #6: Add pagination to the task list _(optional)_.
 
-Extra tasks:
-- Fix any bug you may find.
-- Fix any security issue you may find.
 
 ### Documentation
-This app use [Silex](http://silex.sensiolabs.org/), a  micro-framework based on the Symfony2 Components.
-Documentation can be found here: http://silex.sensiolabs.org/documentation
+This app use [Symfony 3.3](http://symfony.com/), a PHP web application framework and a set of reusable PHP components/libraries. Documentation can be found here: http://symfony.com/doc/current/index.html
 
 
 ### How to submit your work?
 
-1. ##### First you need to fork this repository.
-![Forking a repo](/web/img/fork.png?raw=true "Forking a repo")
+Once you are done, make a pull request on the master branch of the project and tell us how it went.
 
-2. ##### Then clone your fork locally.
-![Cloning a repo](/web/img/clone.png?raw=true "Cloning a repo")
-
-3. ##### Install the app locally. See the [Installation Guide] (#Installation).
-
-4. ##### Once you've completed your work, you can submit a pull-request to the remote repository.
-![ a Pull Request](/web/img/pull-request.png?raw=true "Creating a Pull Request")
-
-5. ##### Review your changes and validate.
-![Validating a Pull Request](/web/img/pull-request-review.png?raw=true "Validating a Pull Request")
-
-
-
-And you're done!
+That's it. Thanks for taking the test. :)
 
 
 More documentation on Github:
