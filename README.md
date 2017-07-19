@@ -7,13 +7,14 @@ The task manager allows anybody to simply manage tasks through a web interface.
 ### Requirements
 * php 5.6+
 * mysql
+* a local server (like Wamp)
 * A github account
 * php composer
 
 ### Installation
 **You must fork and clone your fork localy first.** Then do this procedure:
 ```sh
-php composer install
+composer install
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:create
 ```
@@ -34,7 +35,7 @@ You will be asked to improve the code of this app with the following tasks. You 
 * #2: The user must be able to delete a task.
 * #3: The user must be able to mark a task as completed.
 * #4: A confirmation message must be shown when the user successfully add, complete or delete a task _(hint: flash messages)_.
-* #5: When the user clicks on a task, he must land on task page, with buttons to complete or delete the task.
+* #5: When the user clicks on a task, he must land on a task page, with buttons to complete or delete the task.
 * #6: Add pagination to the task list _(optional)_.
 
 
