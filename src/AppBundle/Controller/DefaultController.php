@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Task;
 
 
@@ -37,9 +38,17 @@ class DefaultController extends Controller
         $task = new Task();
         $task->setLabel($label);
 
+		$validator = $this->get('validator');
+		$errors = $validator->validate($task);
+		
+		if (count($errors) > 0) 
+		{
+			return new Response(json_encode(["error" => "Please enter a task description"]));
+		}
+		
         $em->persist($task);
         $em->flush();
-
-        return $this->redirect( $this->generateUrl('homepage') );
+		
+        return new Response( json_encode( [ "Id" => $task->getId(), "label" => $task->getLabel() ] ) );
     }
 }

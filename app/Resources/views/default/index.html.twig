@@ -3,7 +3,7 @@
 {% block body %}
     <div class="row">
         <div class="col-md-12">
-          <table class="table table-striped">
+          <table id="taskTable" class="table table-striped">
             <thead>
               <tr>
                 <th style="width:5%">Id</th>
@@ -18,7 +18,7 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <form method="post" action="{{ app.request.baseurl }}/add">
+                    <form id="myForm" method="post" action="">
                         <td colspan="2">
                             <input type="textbox" name="label" class="small-6 small-center" placeholder="New task description..."> <button type="submit" class="btn btn-sm btn-primary">Add</button>
                         </td>
@@ -28,6 +28,20 @@
           </table>
         </div>
       </div>
+
+	<script type="text/javascript">
+	$( document ).ready(function(){
+		$("#myForm").submit(function(e){
+			$.post( "{{app.request.baseurl }}/add", {label: $("input[name='label']").val()}, function(data) { 
+					if(typeof(data.error) == "undefined")
+						$("#taskTable tr:last").before("<tr><td>" + data.Id + "</td><td>" + data.label + "</td></tr>"); 
+					else
+						$("#taskTable tr:last td:last").append("<span id='errorMsg'>" + data.error + "</span>");
+				}, "JSON");
+			e.preventDefault();
+		});
+	});
+	</script>
 {% endblock %}
 
 {% block stylesheets %}
