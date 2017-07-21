@@ -15,6 +15,7 @@
                 <tr>
                     <td>{{ task.id }}</td>
                     <td>{{ task.label }}</td>
+					<td><button name="deleteBtn" class="btn btn-sm btn-danger" task-id="{{ task.id }}">Delete</button></td>
                 </tr>
                 {% endfor %}
                 <tr>
@@ -40,6 +41,18 @@
 				}, "JSON");
 			e.preventDefault();
 		});
+		
+		$("button[name='deleteBtn']").bind("click", function(e){
+			var self = this;
+			$.post( "{{app.request.baseurl }}/delete", {Id: $(this).attr("task-id")}, function(data){
+					 $(self).parent().parent().remove();
+			}, "JSON");
+			
+			
+			console.log(   $(this).attr("task-id") )   
+		});
+		
+		
 	});
 	</script>
 {% endblock %}

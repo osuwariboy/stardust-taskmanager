@@ -51,4 +51,20 @@ class DefaultController extends Controller
 		
         return new Response( json_encode( [ "Id" => $task->getId(), "label" => $task->getLabel() ] ) );
     }
+	
+	/**
+     * @Route("/delete", name="delete")
+     */
+	public function deleteAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+        $task = $em->getRepository('AppBundle:Task')->find(  $request->request->get('Id') );
+		
+		$returnVal = [ "Id" => $task->getId(), "Action" => "Del" ];
+		
+		$em->remove($task);
+		$em->flush();
+		
+		return new Response( json_encode( $returnVal ) );
+	}
 }
