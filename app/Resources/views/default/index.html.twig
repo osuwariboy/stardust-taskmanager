@@ -16,6 +16,7 @@
                     <td>{{ task.id }}</td>
                     <td>{{ task.label }}</td>
 					<td><button name="deleteBtn" class="btn btn-sm btn-danger" task-id="{{ task.id }}">Delete</button></td>
+					<td><button name="completeBtn" class="btn btn-sm btn-success" task-id="{{ task.id }}">Complete</button></td>
                 </tr>
                 {% endfor %}
                 <tr>
@@ -35,21 +36,30 @@
 		$("#myForm").submit(function(e){
 			$.post( "{{app.request.baseurl }}/add", {label: $("input[name='label']").val()}, function(data) { 
 					if(typeof(data.error) == "undefined")
-						$("#taskTable tr:last").before("<tr><td>" + data.Id + "</td><td>" + data.label + "</td></tr>"); 
+						$("#taskTable tr:last").before("<tr><td>" + data.Id + "</td><td>" + data.label + "</td>"+
+						"<td><button name=\"deleteBtn\" class=\"btn btn-sm btn-danger\" task-id=\"" + data.Id + "\">Delete</button></td>" + 
+						"<td><button name=\"completeBtn\" class=\"btn btn-sm btn-success\" task-id=\"" + data.Id + "\">Complete</button></td></tr>"
+						); 
 					else
 						$("#taskTable tr:last td:last").append("<span id='errorMsg'>" + data.error + "</span>");
 				}, "JSON");
 			e.preventDefault();
 		});
 		
-		$("button[name='deleteBtn']").bind("click", function(e){
+		$(document).on("click", "button[name='deleteBtn']", function(e){
 			var self = this;
 			$.post( "{{app.request.baseurl }}/delete", {Id: $(this).attr("task-id")}, function(data){
 					 $(self).parent().parent().remove();
+			}, "JSON");	
+			//console.log(   $(this).attr("task-id") )   
+		});
+		
+		
+		$(document).on("click", "button[name='completeBtn']", function(e){
+			var self = this;
+			$.post( "{{app.request.baseurl }}/complete", {Id: $(this).attr("task-id")}, function(data){
+					console.log("bbbb");
 			}, "JSON");
-			
-			
-			console.log(   $(this).attr("task-id") )   
 		});
 		
 		

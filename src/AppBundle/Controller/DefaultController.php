@@ -67,4 +67,20 @@ class DefaultController extends Controller
 		
 		return new Response( json_encode( $returnVal ) );
 	}
+	
+	/**
+     * @Route("/complete", name="complete")
+     */
+	public function completeAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+        $task = $em->getRepository('AppBundle:Task')->find(  $request->request->get('Id') );
+		
+		$task->setStatus('C');
+		
+		$em->persist($task);
+        $em->flush();
+		
+		return new Response( json_encode( ["Statut" => "success"] ));
+	}
 }
