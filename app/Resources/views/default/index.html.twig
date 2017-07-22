@@ -1,17 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<style>
-.alert {
-position:fixed; 
-    top: 0px; 
-    left: 0px; 
-    width: 100%;
-    z-index:9999; 
-    border-radius:0px
-}
-</style>
-
 <div class="alert alert-success" id="success-save" style="display:none">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <strong>Success! </strong>
@@ -46,7 +35,7 @@ position:fixed;
                 {% for task in tasks %}
                 <tr>
                     <td>{{ task.id }}</td>
-                    <td>{{ task.label }}</td>
+                    <td><a href="{{app.request.baseurl}}/task/{{task.id}} ">{{ task.label }}</a></td>
 					<td><button name="deleteBtn" class="btn btn-sm btn-danger" task-id="{{ task.id }}">Delete</button></td>
 					<td><button name="completeBtn" class="btn btn-sm btn-success" task-id="{{ task.id }}">Complete</button></td>
                 </tr>
@@ -108,4 +97,14 @@ position:fixed;
 {% endblock %}
 
 {% block stylesheets %}
+	<style>
+	.alert {
+	position:fixed; 
+		top: 0px; 
+		left: 0px; 
+		width: 100%;
+		z-index:9999; 
+		border-radius:0px
+	}
+	</style>
 {% endblock %}

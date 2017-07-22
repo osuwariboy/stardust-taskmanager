@@ -26,6 +26,20 @@ class DefaultController extends Controller
         ]);
     }
 
+	/**
+     * @Route("/task/{id}", name="task")
+     */
+	public function taskAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+        $task = $em->getRepository('AppBundle:Task')->find(  $request->get('id') );
+		
+		return $this->render('default/task.html.twig', [
+			'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+			'task' => $task
+		]);
+	}
+	
     /**
      * @Route("/add", name="add")
      */

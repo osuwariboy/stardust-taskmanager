@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="alert alert-success" id="success-complete" style="display:none">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>Success! </strong>
+	Task was successfully marked as completed.
+</div>
+<div class="alert alert-success" id="success-delete" style="display:none">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>Success! </strong>
+	Task was successfully deleted.
+</div>
+
+	<div class="row">
+        <div class="col-md-12">
+          <table id="taskTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th style="width:5%">Id</th>
+                <th>Task</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.label }}</td>
+					<td><button name="deleteBtn" class="btn btn-sm btn-danger" task-id="{{ task.id }}">Delete</button></td>
+					<td><button name="completeBtn" class="btn btn-sm btn-success" task-id="{{ task.id }}">Complete</button></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+	<script type="text/javascript">
+	$( document ).ready(function(){
+		$(document).on("click", "button[name='deleteBtn']", function(e){
+			var self = this;
+			$.post( "{{app.request.baseurl }}/delete", {Id: $(this).attr("task-id")}, function(data){
+					$(self).parent().parent().remove();
+					$("#success-delete").slideDown(500).delay(2000).slideUp(500);  
+			}, "JSON");	
+		});
+		
+		
+		$(document).on("click", "button[name='completeBtn']", function(e){
+			var self = this;
+			$.post( "{{app.request.baseurl }}/complete", {Id: $(this).attr("task-id")}, function(data){
+					$("#success-complete").slideDown(500).delay(2000).slideUp(500);  
+			}, "JSON");
+		});
+		
+		
+	});
+	</script>
+{% endblock %}
+
+{% block stylesheets %}
+
+<style>
+	.alert {
+	position:fixed; 
+		top: 0px; 
+		left: 0px; 
+		width: 100%;
+		z-index:9999; 
+		border-radius:0px
+	}
+</style>
+
+{% endblock %}
