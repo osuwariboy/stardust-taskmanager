@@ -58,7 +58,7 @@
 			$.post( "{{app.request.baseurl }}/add", {label: $("input[name='label']").val()}, function(data) { 
 					if(typeof(data.error) == "undefined")
 					{
-						$("#taskTable tr:last").before("<tr><td>" + data.Id + "</td><td>" + data.label + "</td>"+
+						$("#taskTable tr:last").before("<tr><td>" + data.Id + "</td><td><a href=\"{{app.request.baseurl}}/task/" + data.Id + "\">" + data.label + "</a></td>"+
 						"<td><button name=\"deleteBtn\" class=\"btn btn-sm btn-danger\" task-id=\"" + data.Id + "\">Delete</button></td>" + 
 						"<td><button name=\"completeBtn\" class=\"btn btn-sm btn-success\" task-id=\"" + data.Id + "\">Complete</button></td></tr>"
 						);
